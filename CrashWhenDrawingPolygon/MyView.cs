@@ -15,7 +15,7 @@ namespace CrashWhenDrawingPolygon
         private SKPoint _center;
         private SKPath _path;
         private SKPath _originalPath;
-        private float _scale = 0.0005f;
+        private float _scale = 0.05f;
 
         public MyView(CGRect frame)
             : base(frame)
@@ -106,8 +106,10 @@ namespace CrashWhenDrawingPolygon
             canvas.Scale((float)_canvas.ContentScaleFactor);
             canvas.Clear(SKColors.White);
             canvas.Translate(_center.X - _path.Bounds.MidX, _center.Y - _path.Bounds.MidY);
-            var paint = new SKPaint { Color = SKColors.Red, StrokeWidth = 10, Style = SKPaintStyle.StrokeAndFill };
-            e.Surface.Canvas.DrawPath(_path, paint);
+            using (var paint = new SKPaint {Color = SKColors.Red, StrokeWidth = 10, Style = SKPaintStyle.StrokeAndFill})
+            {
+                e.Surface.Canvas.DrawPath(_path, paint);
+            }
         }
     }
 }
